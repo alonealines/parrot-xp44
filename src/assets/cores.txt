@@ -1,0 +1,33 @@
+------------ CORES ---------------
+
+roxo dark primary color {
+background-color: #512DA8
+}
+
+roxo light primary color {
+background-color: #D1C4E9
+}
+
+roxo primary color {
+background-color: #673AB7
+}
+
+branco text/icons {
+background-color: #FFFFFF
+}
+
+verde accent color {
+background-color: #8BC34A
+}
+
+preto primary text {
+background-color: #212121
+}
+
+cinza escuro secondary text {
+background-color: #757575
+}
+
+cinza claro divider color {
+background-color: #BDBDBD
+}
