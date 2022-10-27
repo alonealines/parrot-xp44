@@ -1,6 +1,6 @@
-import { type } from 'os'
-import {IPostsEntity} from '../../../../../domain/entities/post.entity'
-import entityToModelPostMysql from './entityToModel.post.mysql'
+import { type } from 'os';
+import {IPostsEntity} from '../../../../../domain/entities/post.entity';
+import entityToModelPostMysql from './entityToModel.post.mysql';
 
 export default function (post: any):IPostsEntity | undefined {
     if(!post){
@@ -17,5 +17,4 @@ export default function (post: any):IPostsEntity | undefined {
     }
 
     return (entity as IPostsEntity)
-
 }

@@ -23,7 +23,6 @@ class UsersController {
         const user = await readUserUsecase.execute({
             UserId: Number(req.params.UserId)
         })
-
         res.status(200).send(user)
     }
 
@@ -35,7 +34,6 @@ class UsersController {
 
     async updateUsers(req: express.Request, res: express.Response) {
         let user = await updateUserUsecase.execute(req.body)
-        
         res.status(200).send(user)
     }
 
@@ -43,22 +41,13 @@ class UsersController {
             await deleteUserUsecase.execute({
                 UserId: Number(req.params.UserId)
             })
-        
         return res.status(204).send()
     }
 
     async loginOne(req: express.Request, res: express.Response) {
-        try { 
+        try {
             const user = await loginUserUsecase.execute(req.body)
-            const token = jwt.sign({
-                indexId: user.indexId,
-                name: user.name,
-                email: user.email,
-                apartment: user.apartment
-            },
-            SECRET_KEY)
-            
-            return res.status(200).send(token);
+            return res.status(200).send({ data: user });
         } catch (error) {
             return res.status(500).send(getErrorMessage(error));
         }

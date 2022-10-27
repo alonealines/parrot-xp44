@@ -1,4 +1,3 @@
-
 import { IPostsEntity } from "../../entities/post.entity";
 import { IPostsRepository } from "../../repositories/post.repository.interface";
 import { IUseCase} from "../interface.usecase";

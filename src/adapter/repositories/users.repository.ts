@@ -18,7 +18,6 @@ export class UsersRepository implements IUsersRepository {
     async create(resource: IUsersEntity): Promise<IUsersEntity> {
         const { person } = entityToModelUsersMysql(resource)
         const personModel = await this._database.create(this._usersModel, person)
-            
         return personModel
     }
 
@@ -46,8 +45,7 @@ export class UsersRepository implements IUsersRepository {
         let personModel = await this._database.read(this._usersModel, resource.indexId!)
         let { person } = entityToModelUsersMysql(resource)
         
-        await this._database.update(personModel, person);
-               
+        await this._database.update(personModel, person); 
         return resource;
     }
 

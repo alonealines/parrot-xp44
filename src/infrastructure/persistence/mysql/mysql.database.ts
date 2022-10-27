@@ -50,7 +50,6 @@ export class MysqlDatabase implements IDatabaseModel {
         const result = await model.destroy({
             where: dataWhere
         });
-
         return (result > 0);
     }
 

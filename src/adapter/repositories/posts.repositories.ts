@@ -10,7 +10,7 @@ import * as sequelize from "sequelize";
 
 export class PostsRepositories implements IPostsRepository {
 
-    constructor(
+  constructor(
     private _database:IDatabaseModel,
     private _postModel: sequelize.ModelCtor<sequelize.Model<any, any>>
     ){}
@@ -18,14 +18,12 @@ export class PostsRepositories implements IPostsRepository {
     async create(resource: IPostsEntity): Promise<IPostsEntity> {
         const {Post} = entityToModelPost(resource);
         const postsModel = await this._database.create(this._postModel, Post)
-
         return postsModel
     } 
     
     async list():Promise<IPostsEntity[]>{
       const postsModel = await this._database.list(this._postModel)
       const post = postsModel.map(modelToEntityPostMysql)
-
       return post
 
     }
@@ -36,7 +34,7 @@ export class PostsRepositories implements IPostsRepository {
       return modelToEntityPostMysql(post)
       
       } catch (err) {
-          console.error("Deu ruim", err)
+          console.error("Não deu bom", err)
       }
   }
 
@@ -46,9 +44,34 @@ export class PostsRepositories implements IPostsRepository {
    
     let { Post } = entityToModelPost(resource)
     
-    await this._database.update(postModel, Post);
-           
+    await this._database.update(postModel, Post);     
     return resource;
+}
+async groupPostsByIdUser(UseriD: string): Promise<{
+  UserId: string,
+  postid: Number
+  contentText: string
+
+}>{
+  
+  const postByIdUser = await this._database.selectQuery(
+    `SELECT * from posts WHERE userid = :UserId`, 
+    {
+      UseriD
+    }
+
+  )
+
+  if(postByIdUser[1].UserId) {
+    return postByIdUser[1];
+  }else{
+    return {
+      
+    postid:0,
+    UserId: UseriD,
+    contentText: ''}
+
+  }
 }
 
 }

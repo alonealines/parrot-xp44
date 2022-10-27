@@ -5,4 +5,5 @@ export interface IDatabaseModel extends IDatabase {
     read(type: any, dataId: number, includes?: object): any,
     list(type: any, includes?: object): any,
     login(type: any, data: any): any
+    SelectQuery(sql: string, replacements: any): any,
 }

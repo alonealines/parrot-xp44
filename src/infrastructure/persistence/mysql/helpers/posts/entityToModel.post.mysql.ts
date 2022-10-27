@@ -1,4 +1,4 @@
-import {IPostsEntity} from '../../../../../domain/entities/post.entity'
+import {IPostsEntity} from '../../../../../domain/entities/post.entity';
 
 export default function (post: IPostsEntity){
     const Post = {
@@ -6,9 +6,8 @@ export default function (post: IPostsEntity){
         userid: post.userid,
         contentText: post.contentText,
 }
- 
- return{
-    Post:Post
- }
 
+    return{
+        Post:Post
+ }
 }
