@@ -1,9 +1,9 @@
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import './Cadastro.style';
+import Logo from '../assets/img/logocolorido.svg';
 import { useState } from 'react';
 
-const Logo = require('assets/img/logo colorido.png');
 
 
 function Cadastro() {
