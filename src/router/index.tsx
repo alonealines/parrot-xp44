@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter } from "react-router-dom";
 import Cadastro from '../pages/Cadastro';
-import Login from '../pages/Login/Login';
+import Login from '../pages/Login';
 
 const router = createBrowserRouter([
 
