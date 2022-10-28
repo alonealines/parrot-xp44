@@ -1,8 +1,9 @@
 import express from 'express';
 import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken';
-import { IToken } from '../../../infrastructure/config/token.config';
+import { IToken } from '../helpers/token.interface.helper';
 import { Joi, validate, ValidationError } from 'express-validation';
+import constantsConfig from '../../../infrastructure/config/constants.config';
 
 class PostMiddleware {
     validateGetById = validate({
@@ -17,29 +18,19 @@ class PostMiddleware {
             contentText: Joi.string().required()
         })
     })
-    async validateRequiredPostBodyFields(req: express.Request, res: express.Response, next: express.NextFunction){
-        if (req.body && req.body.userid !== undefined) {
-            next();
-        } else {
-            res.status(400).send({error: `Verifique os campos obrigatórios para criar uma conta.`});
-        }
-    }
 
     authJWT(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const token = req.header('Authorization')?.replace('Baerer ', '')
             console.log(token)
             if (!token) {
-                console.error('Não deu bom')
+                res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.TOKEN_REQUIRED})
               }
-        
               const decoded = jwt.verify(token!, secret);
             (req as IToken).token = decoded;
-            
             next()
-        
         } catch (error) {
-            res.status(401).send('Please authenticate');
+            res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.VERIFY_AUTH});
         }
     }
    
@@ -47,8 +38,8 @@ class PostMiddleware {
         if (err instanceof ValidationError) {
             return res.status(err.statusCode).json(err)
         }
-        if (err.name === "UnauthorizedError") {
-          res.status(401).send("invalid token...");
+        if (err.name === "Unauthorized Error") {
+          res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.INVALID_TOKEN});
         } else {
           next(err);
         }

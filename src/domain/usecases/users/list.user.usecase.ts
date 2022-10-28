@@ -8,7 +8,6 @@ class ListUsersUseCase implements IUseCase {
     constructor(private _repository: IUsersRepository){}
     async execute(): Promise<IUsersEntity[] | undefined> {
         return await this._repository.list()
-        
     }
 }
 

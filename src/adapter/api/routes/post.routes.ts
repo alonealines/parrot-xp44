@@ -9,33 +9,23 @@ export class PostRoutes extends CommonRoutesConfig {
     }
 
     configureRoutes(): express.Application {
-        
-            this.app.route(`/post`)
+        this.app.route(`/post`)
             .get(
                 postMiddleware.authJWT,
                 postController.listPosts,
                 );
-
-            this.app.route(`/post`)
+        this.app.route(`/post`)
             .post( 
                 postMiddleware.authJWT,
                 postMiddleware.validateRegister,
                 postController.createPosts 
             );
 
-            this.app.route('/post/:PostId')
-            .all(postMiddleware.validateGetById,
-                postMiddleware.authJWT)
-            .get(postController.getPostById)
-            .put(postController.updatePosts);
-
-            this.app.route('/users/posts/:UserId')
-                .get(
-                    postMiddleware.authJWT,
-                    postController.postsByIdUser
-                    );
-
-            this.app.use(postMiddleware.validateError);
-            return this.app
+        this.app.route(`/user/post`)
+            .post(
+                postController.postByUser
+            );
+        return this.app;
+      
     }
 }

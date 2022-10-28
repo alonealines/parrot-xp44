@@ -1,4 +1,3 @@
-import * as Sequelize from "sequelize";
 import { IDatabaseModel } from "../../infrastructure/persistence/database.model.interface";
 import { IPostsEntity } from "../../domain/entities/post.entity";
 import { MysqlDatabase } from "../../infrastructure/persistence/mysql/mysql.database";
@@ -10,9 +9,9 @@ import * as sequelize from "sequelize";
 
 export class PostsRepositories implements IPostsRepository {
 
-  constructor(
-    private _database:IDatabaseModel,
-    private _postModel: sequelize.ModelCtor<sequelize.Model<any, any>>
+    constructor(
+      private _database:IDatabaseModel,
+      private _postModel: sequelize.ModelCtor<sequelize.Model<any, any>>
     ){}
     
     async create(resource: IPostsEntity): Promise<IPostsEntity> {
@@ -34,46 +33,54 @@ export class PostsRepositories implements IPostsRepository {
       return modelToEntityPostMysql(post)
       
       } catch (err) {
-          console.error("Não deu bom", err)
+          console.error("Deu ruim", err)
       }
-  }
+    }
 
-  async updateById(resource: IPostsEntity): Promise<IPostsEntity | undefined> {
+    async updateById(resource: IPostsEntity): Promise<IPostsEntity | undefined> {
     
-    let postModel = await this._database.read(this._postModel, resource.postid!)
-   
-    let { Post } = entityToModelPost(resource)
+      let postModel = await this._database.read(this._postModel, resource.postid!)
+      let { Post } = entityToModelPost(resource)
     
-    await this._database.update(postModel, Post);     
-    return resource;
-}
-async groupPostsByIdUser(UseriD: string): Promise<{
-  UserId: string,
-  postid: Number
-  contentText: string
+      await this._database.update(postModel, Post);      
+      return resource;
+    }
+
+    async groupPostsByIdUser(UseriD: string): Promise<{
+      UserId: string,
+      postid: Number
+      contentText: string
 
 }>{
   
-  const postByIdUser = await this._database.selectQuery(
-    `SELECT * from posts WHERE userid = :UserId`, 
+    const postByIdUser = await this._database.selectQuery(
+      `SELECT * from posts WHERE userid = :UserId`, 
     {
       UseriD
     }
-
   )
 
-  if(postByIdUser[1].UserId) {
-    return postByIdUser[1];
-  }else{
-    return {
-      
-    postid:0,
-    UserId: UseriD,
-    contentText: ''}
-
+    if(postByIdUser[1].UserId) {
+      return postByIdUser[1];
+    }else{
+      return {
+        postid:0,
+        UserId: UseriD,
+        contentText: ''}
   }
 }
 
+    async readByWhere(userid: string): Promise<IPostsEntity | undefined> {
+      try{
+        const post = await this._database.readByWhere(this._postModel, {
+        userid: userid
+      });
+      
+      return modelToEntityPostMysql(post);
+  } catch(err){
+      throw new Error((err as Error).message);
+  }
+}
 }
 
 export default new PostsRepositories(

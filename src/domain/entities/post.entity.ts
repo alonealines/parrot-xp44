@@ -4,5 +4,4 @@ export interface IPostsEntity {
     contentText: string,
     createdAt?: Date,
     updatedAt?: Date
-    
 }

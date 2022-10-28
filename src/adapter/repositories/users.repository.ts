@@ -12,12 +12,11 @@ export class UsersRepository implements IUsersRepository {
         private _database: IDatabaseModel,
         private _usersModel: Sequelize.ModelCtor<Sequelize.Model<any, any>>
     ){
-
     }
 
     async create(resource: IUsersEntity): Promise<IUsersEntity> {
         const { person } = entityToModelUsersMysql(resource)
-        const personModel = await this._database.create(this._usersModel, person)
+        const personModel = await this._database.create(this._usersModel, person)  
         return personModel
     }
 
@@ -32,7 +31,7 @@ export class UsersRepository implements IUsersRepository {
         return modelToEntityUsersMysql(person)
         
         } catch (err) {
-            console.error("Deu ruim", err)
+            console.error("Problema!", err)
         }
     }
 
@@ -45,7 +44,7 @@ export class UsersRepository implements IUsersRepository {
         let personModel = await this._database.read(this._usersModel, resource.indexId!)
         let { person } = entityToModelUsersMysql(resource)
         
-        await this._database.update(personModel, person); 
+        await this._database.update(personModel, person);  
         return resource;
     }
 

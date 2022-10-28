@@ -11,7 +11,6 @@ export class CreatePostUseCase implements IUseCase {
     return await this._repository.create(data);
       
   }
-
 }
 
 export default new CreatePostUseCase(

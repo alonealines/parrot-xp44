@@ -7,5 +7,4 @@ export interface IUsersRepository {
     list(): Promise<IUsersEntity[]>,
     updateById(resource:IUsersEntity): Promise<IUsersEntity | undefined>,
     login(resource: IUsersEntity): Promise<IUsersEntity>
-
 }
