@@ -2,13 +2,15 @@ import "./Box.css";
 import Button from "../components/Button";
 import Input from "./Input";
 
+const Logo = require('../src/assets/logocolorido.svg');
+
 function Box() {
   return (
     <div className="bg-img">
       <div className="box-container">
         <div className="container-itens">
           <div className="logo">
-            <img src="../assets/img/logocolorido.svg" alt="logo" />
+            <img src={Logo} alt="logo" />
           </div>
 
           <h1>Cadastro</h1>
